@@ -1,45 +1,51 @@
-class Karyawan {
+const kamera = {
+  ambilFoto() {
+    console.log(this.nama + " mengambil foto.");
+  },
+};
+
+const internet = {
+  bukaBrowser() {
+    console.log(this.nama + " membuka browser.");
+  },
+};
+
+const telepon = {
+  panggil() {
+    console.log(this.nama + " melakukan panggilan.");
+  },
+};
+
+function applyCapabilities(Kelas, ...kemampuan) {
+  Object.assign(Kelas.prototype, ...kemampuan);
+}
+
+class TabletWifi {
   constructor(nama) {
     this.nama = nama;
   }
+}
 
-  info() {
-    console.log("Karyawan: " + this.nama);
+class PonselJadul {
+  constructor(nama) {
+    this.nama = nama;
   }
 }
 
-class KaryawanTetap extends Karyawan {
-  hitungLembur(jam) {
-    console.log(
-      this.nama + " lembur " + jam + " jam, upah Rp " + jam * 50000 + "."
-    );
-  }
-}
+applyCapabilities(TabletWifi, kamera, internet);
+applyCapabilities(PonselJadul, telepon);
 
-class KaryawanMagang extends Karyawan {
-  terimaUangSaku(nominal) {
-    console.log(this.nama + " menerima uang saku Rp " + nominal + ".");
-  }
-}
+const tablet = new TabletWifi("Tablet_XXXX");
+const ponsel = new PonselJadul("Ponsel_XXXX");
 
-class Programmer extends KaryawanTetap {}
-class Desainer extends KaryawanTetap {}
-class Magang extends KaryawanMagang {}
+tablet.ambilFoto();
+tablet.bukaBrowser();
+ponsel.panggil();
 
-function prosesLembur(daftar) {
-  daftar.forEach((x) => x.hitungLembur(3));
-}
-
-function berikanUangSaku(daftar) {
-  daftar.forEach((x) => x.terimaUangSaku(1500000));
-}
-const budi = new Programmer("Budi_XXXX");
-const rina = new Magang("Rina_XXXX");
-const sari = new Desainer("Sari_XXXX");
-
-budi.info();
-rina.info();
-sari.info();
-
-prosesLembur([budi, sari]);
-berikanUangSaku([rina]);
+console.log(
+  "Ponsel_XXXX bisa mengambil foto? " + (typeof ponsel.ambilFoto === "function")
+);
+console.log(
+  "Tablet_XXXX bisa melakukan panggilan? " +
+    (typeof tablet.panggil === "function")
+);
